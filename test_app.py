@@ -21,15 +21,15 @@ class GamingTourneyTestCase(unittest.TestCase):
         setup_db(self.app, self.database_path)
 
         self.new_player = {
-            'name': 'A real name',
-            'nickname': 'A cool nickname',
-            'nationality': 'Some nice country'
+            "name": "A real name",
+            "nickname": "A cool nickname",
+            "nationality": "Some nice country"
         }
 
         self.wrong_datatypes_player = {
-            'name': 'A real name',
-            'nickname': 123456,
-            'nationality': 'Some nice country'
+            "name": "A real name",
+            "nickkname": "A cool nickname",
+            "nationality": "Some nice country"
         }
 
         # binds the app to the current context
