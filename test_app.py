@@ -37,7 +37,7 @@ class GamingTourneyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['categories'])
+        self.assertTrue(data['players'])
 
     def test_405_requesting_players_with_wrong_method(self):
         res = self.client().patch('/players')
