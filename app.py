@@ -53,6 +53,25 @@ def create_app(test_config=None):
 	    	abort(422)
 
 
+    @app.route('/players/<int:player_id>', methods=['DELETE'])
+    def delete_a_question(player_id):
+        player = db.session.query(Player).get(player_id)
+
+        if player is None:
+            abort(404)
+
+        try:
+            player.delete()
+
+            return jsonify({
+                'success': True,
+            })
+
+        except:
+        	db.session.rollback()
+        	abort(422)
+
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
