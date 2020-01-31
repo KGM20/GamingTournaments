@@ -54,7 +54,7 @@ def create_app(test_config=None):
 
 
     @app.route('/players/<int:player_id>', methods=['DELETE'])
-    def delete_a_question(player_id):
+    def delete_a_player(player_id):
         player = db.session.query(Player).get(player_id)
 
         if player is None:
@@ -69,6 +69,37 @@ def create_app(test_config=None):
 
         except:
         	db.session.rollback()
+        	abort(422)
+
+
+    @app.route('/players/<int:player_id>', methods=['PATCH'])
+    def update_drink(player_id):
+	    body = request.get_json()
+
+	    name = body.get('name', None)
+	    nickname = body.get('nickname', None)
+	    nationality = body.get('nationality', None)
+
+	    if name is None or nickname is None:
+	    	abort(422)
+
+	    player = db.session.query(Player).get(player_id)
+
+	    if player is None:
+	        abort(404)
+
+	    try:
+	        player.name = name
+	        player.nickname = nickname
+	        player.nationality = nationality
+
+	        player.update()
+
+	        return jsonify({
+	            'success': True
+	        }), 200
+
+	    except:
         	abort(422)
 
 

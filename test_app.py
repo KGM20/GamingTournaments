@@ -108,7 +108,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_422_update_player_with_wrong_format(self):
-        res = self.client().post('/players/5',
+        res = self.client().patch('/players/5',
                                  json=self.wrong_patch_format)
         data = json.loads(res.data)
 
