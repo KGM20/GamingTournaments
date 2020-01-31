@@ -17,7 +17,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.database_name = "test.db"
         self.project_dir = os.path.dirname(os.path.abspath(__file__))
         self.database_path = "sqlite:///{}".format(os.path.join(self.project_dir,
-                                                  				self.database_filename))
+                                                  				self.database_name))
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -30,6 +30,22 @@ class GamingTourneyTestCase(unittest.TestCase):
     def tearDown(self):
         """Executed after each test"""
         pass
+
+    def test_get_players(self):
+        res = self.client().get('/players')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['categories'])
+
+    def test_405_requesting_players_with_wrong_method(self):
+        res = self.client().patch('/players')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Method not allowed')
 
 
 # Make the tests conveniently executable
