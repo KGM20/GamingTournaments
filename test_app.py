@@ -26,10 +26,20 @@ class GamingTourneyTestCase(unittest.TestCase):
             "nationality": "Some nice country"
         }
 
-        self.wrong_datatypes_player = {
+        self.wrong_format_player = {
             "name": "A real name",
             "nickkname": "A cool nickname",
             "nationality": "Some nice country"
+        }
+
+        self.patch_player = {
+            "name": "An unreal name",
+            "nickname": "A not cool nickname",
+            "nationality": ""
+        }
+
+        self.wrong_patch_format = {
+            "name": "Not cool..."
         }
 
         # binds the app to the current context
@@ -68,7 +78,7 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_create_player_with_wrong_datatype(self):
         res = self.client().post('/players',
-                                 json=self.wrong_datatypes_player)
+                                 json=self.wrong_format_player)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -90,6 +100,21 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Not found')
 
+    def test_update_player(self):
+        res = self.client().patch('/players/5', json=self.patch_player)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_422_update_player_with_wrong_format(self):
+        res = self.client().post('/players/5',
+                                 json=self.wrong_patch_format)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable entity')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
