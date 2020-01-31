@@ -35,7 +35,6 @@ class Player(db.Model):
     def __init__(self, name, nickname, nationality):
         self.name = name
         self.nickname = nickname
-        self.category = category
         self.nationality = nationality
 
     def insert(self):
