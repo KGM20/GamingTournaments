@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db
+from models import setup_db, db, Player
 
 def create_app(test_config=None):
 
@@ -10,13 +10,24 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    @app.after_request  # CORS Headers
-	def after_request(response):
+    @app.after_request  # CORS headers
+    def after_request(response):
 	    response.headers.add('Access-Control-Allow-Headers',
 	                         'Content-Type,Authorization,true')
 	    response.headers.add('Access-Control-Allow-Methods',
 	                         'GET, PATCH, POST, DELETE, OPTIONS')
 	    return response
+
+    @app.route('/players', methods=['GET'])
+    def retrieve_players():
+
+	    players = db.session.query(Player).all()
+	    format_players = [player.format() for player in players]
+
+	    return jsonify({
+	        'success': True,
+	        'players': format_players
+	    }), 200
 
     @app.errorhandler(404)
     def not_found(error):
