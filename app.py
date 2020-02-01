@@ -104,6 +104,18 @@ def create_app(test_config=None):
     		abort(422)
 
 
+    @app.route('/games', methods=['GET'])
+    def retrieve_games():
+
+	    games = db.session.query(Game).all()
+	    format_games = [game.format() for game in games]
+
+	    return jsonify({
+	        'success': True,
+	        'games': format_games
+	    }), 200
+
+
     @app.route('/games', methods=['POST'])
     def create_game():
 	    body = request.get_json()
