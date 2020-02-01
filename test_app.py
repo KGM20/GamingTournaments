@@ -42,6 +42,14 @@ class GamingTourneyTestCase(unittest.TestCase):
             "name": "Not cool..."
         }
 
+        self.new_game = {
+            "title": "A cool game"
+        }
+
+        self.wrong_format_game = {
+            "titte": "I\'m not valid :("
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -110,6 +118,22 @@ class GamingTourneyTestCase(unittest.TestCase):
     def test_422_update_player_with_wrong_format(self):
         res = self.client().patch('/players/5',
                                  json=self.wrong_patch_format)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable entity')
+
+    def test_create_new_game(self):
+        res = self.client().post('/games', json=self.new_game)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_422_create_game_with_wrong_format(self):
+        res = self.client().post('/games',
+                                 json=self.wrong_format_game)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
