@@ -1,8 +1,10 @@
 import os
+from datetime import datetime
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db, db, Player, Game
+
+from models import setup_db, db, Player, Game, Tourney
 
 def create_app(test_config=None):
 
@@ -153,6 +155,35 @@ def create_app(test_config=None):
         except:
         	db.session.rollback()
         	abort(422)
+
+
+    @app.route('/tourneys', methods=['POST'])
+    def create_tourney():
+	    body = request.get_json()
+
+	    name = body.get('name', None)
+	    location = body.get('location', None)
+	    game_id = body.get('game_id', None)
+
+	    # This try-except is to validate date has a real date format
+	    try:
+	    	date = datetime.strptime(body.get('date', None), "%Y-%m-%d %H:%M")
+
+	    except:
+	    	abort(422)
+
+	    tourney = Tourney(name=name, location=location, date=date, game_id=game_id)
+
+	    try:
+	        tourney.insert()
+
+	        return jsonify({
+                'success': True,
+            })
+
+	    except:
+	    	db.session.rollback()
+	    	abort(422)
 
 
     @app.errorhandler(404)
