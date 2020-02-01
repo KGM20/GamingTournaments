@@ -134,7 +134,7 @@ class Tourney(db.Model):
             'id': self.id,
             'name': self.name,
             'location': self.location,
-            'date': self.date,
+            'date': self.date.strftime("%Y-%m-%d %H:%M:%S"),
         	'winner': self.winner,
         	'game_id': self.game_id
         }

@@ -157,6 +157,18 @@ def create_app(test_config=None):
         	abort(422)
 
 
+    @app.route('/tourneys', methods=['GET'])
+    def retrieve_tourneys():
+
+	    tourneys = db.session.query(Tourney).all()
+	    format_tourneys = [tourney.format() for tourney in tourneys]
+
+	    return jsonify({
+	        'success': True,
+	        'players': format_tourneys
+	    }), 200
+
+
     @app.route('/tourneys', methods=['POST'])
     def create_tourney():
 	    body = request.get_json()
