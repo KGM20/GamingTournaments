@@ -115,7 +115,7 @@ class Tourney(db.Model):
         self.name = name
         self.location = location
         self.date = date
-        self.winner = ''
+        self.winner = None
         self.game_id = game_id
 
     def insert(self):
