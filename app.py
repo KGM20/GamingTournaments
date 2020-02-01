@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db, db, Player
+from models import setup_db, db, Player, Game
 
 def create_app(test_config=None):
 
@@ -100,7 +100,28 @@ def create_app(test_config=None):
 	        }), 200
 
 	    except:
-        	abort(422)
+	    	db.session.rollback()
+    		abort(422)
+
+
+    @app.route('/games', methods=['POST'])
+    def create_game():
+	    body = request.get_json()
+
+	    title = body.get('title', None)
+
+	    game = Game(title=title)
+
+	    try:
+	        game.insert()
+
+	        return jsonify({
+                'success': True,
+            })
+
+	    except:
+	    	db.session.rollback()
+	    	abort(422)
 
 
     @app.errorhandler(404)
