@@ -165,7 +165,7 @@ def create_app(test_config=None):
 
 	    return jsonify({
 	        'success': True,
-	        'players': format_tourneys
+	        'tourneys': format_tourneys
 	    }), 200
 
 
