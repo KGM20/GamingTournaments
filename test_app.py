@@ -50,6 +50,20 @@ class GamingTourneyTestCase(unittest.TestCase):
             "titte": "I\'m not valid :("
         }
 
+        self.new_tourney = {
+            "name": "A tourney for cool people",
+            "location": "Some awesome city",
+            "date": "2020-08-13 9:10",
+            "game_id": 2
+        }
+
+        self.wrong_datatypes_tourney = {
+            "name": "A sad toruney",
+            "location": "Some abandoned city",
+            "date": ":(",
+            "game_id": "R.I.P."
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -170,6 +184,22 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Not found')
+
+    def test_create_new_tourney(self):
+        res = self.client().post('/tourneys', json=self.new_tourney)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_422_create_player_with_wrong_datatype(self):
+        res = self.client().post('/tourneys',
+                                 json=self.wrong_datatypes_tourney)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable entity')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
