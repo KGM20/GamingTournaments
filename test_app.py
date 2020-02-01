@@ -185,6 +185,18 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Not found')
 
+    def test_get_tourneys(self):
+        res = self.client().get('/tourneys')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['tourneys'])
+
+    def test_405_requesting_tourneys_with_wrong_method(self):
+        res = self.client().patch('/tourneys')
+        data = json.loads(res.data)
+
     def test_create_new_tourney(self):
         res = self.client().post('/tourneys', json=self.new_tourney)
         data = json.loads(res.data)
@@ -192,7 +204,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def test_422_create_player_with_wrong_datatype(self):
+    def test_422_create_tourney_with_wrong_datatype(self):
         res = self.client().post('/tourneys',
                                  json=self.wrong_datatypes_tourney)
         data = json.loads(res.data)
