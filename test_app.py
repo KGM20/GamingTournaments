@@ -124,6 +124,22 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Unprocessable entity')
 
+    def test_get_games(self):
+        res = self.client().get('/games')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['games'])
+
+    def test_405_requesting_games_with_wrong_method(self):
+        res = self.client().patch('/games')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Method not allowed')
+
     def test_create_new_game(self):
         res = self.client().post('/games', json=self.new_game)
         data = json.loads(res.data)
