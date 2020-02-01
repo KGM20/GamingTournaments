@@ -136,6 +136,25 @@ def create_app(test_config=None):
 	    	abort(422)
 
 
+    @app.route('/games/<int:game_id>', methods=['DELETE'])
+    def delete_a_game(game_id):
+        game = db.session.query(Game).get(game_id)
+
+        if game is None:
+            abort(404)
+
+        try:
+            game.delete()
+
+            return jsonify({
+                'success': True,
+            })
+
+        except:
+        	db.session.rollback()
+        	abort(422)
+
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
