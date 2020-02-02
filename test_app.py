@@ -64,6 +64,14 @@ class GamingTourneyTestCase(unittest.TestCase):
             "game_id": "R.I.P."
         }
 
+        self.patch_tourney = {
+            "name": "A tourney for cool people",
+            "location": "Some awesome city",
+            "date": "2019-08-13 9:10",
+            "winner": 1,
+            "game_id": 2
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -239,6 +247,21 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Not found')
+
+    def test_update_tourney(self):
+        res = self.client().patch('/tourneys/3', json=self.patch_tourney)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_422_update_tourney_with_wrong_format(self):
+        res = self.client().patch('/tourneys/3', json=self.wrong_patch_format)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable entity')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
