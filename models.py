@@ -130,11 +130,13 @@ class Tourney(db.Model):
         db.session.commit()
 
     def format(self):
-        return {
+    	game = db.session.query(Game).get(self.game_id)
+
+    	return {
             'id': self.id,
             'name': self.name,
             'location': self.location,
             'date': self.date.strftime("%Y-%m-%d %H:%M:%S"),
         	'winner': self.winner,
-        	'game_id': self.game_id
+        	'game': game.title
         }
