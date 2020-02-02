@@ -289,6 +289,15 @@ def create_app(test_config=None):
 	    if tourney in player_tourneys:
         	abort(422)
 
+	    '''
+	    This is to not submit an inscription to a tourney that has been held
+	    already
+	    '''
+	    today = datetime.now()
+
+	    if today > tourney.date:
+	    	abort(422)
+
 	    player_tourneys.append(tourney)
 	    player.player_tourneys = player_tourneys
 
