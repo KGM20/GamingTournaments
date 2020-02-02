@@ -33,6 +33,20 @@ def create_app(test_config=None):
 	    }), 200
 
 
+    @app.route('/players/<int:player_id>', methods=['GET'])
+    def retriev_player_by_id(player_id):
+
+	    player = db.session.query(Player).get(player_id)
+
+	    if player is None:
+	    	abort(404)
+
+	    return jsonify({
+	        'success': True,
+	        'player': player.format()
+	    }), 200
+
+
     @app.route('/players', methods=['POST'])
     def create_player():
 	    body = request.get_json()
