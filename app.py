@@ -23,7 +23,6 @@ def create_app(test_config=None):
 
     @app.route('/players', methods=['GET'])
     def retrieve_players():
-
 	    players = db.session.query(Player).all()
 	    format_players = [player.format() for player in players]
 
@@ -35,7 +34,6 @@ def create_app(test_config=None):
 
     @app.route('/players/<int:player_id>', methods=['GET'])
     def retriev_player_by_id(player_id):
-
 	    player = db.session.query(Player).get(player_id)
 
 	    if player is None:
@@ -173,13 +171,25 @@ def create_app(test_config=None):
 
     @app.route('/tourneys', methods=['GET'])
     def retrieve_tourneys():
-
 	    tourneys = db.session.query(Tourney).all()
 	    format_tourneys = [tourney.format() for tourney in tourneys]
 
 	    return jsonify({
 	        'success': True,
 	        'tourneys': format_tourneys
+	    }), 200
+
+
+    @app.route('/tourneys/<int:tourney_id>', methods=['GET'])
+    def retriev_tourney_by_id(tourney_id):
+	    tourney = db.session.query(Tourney).get(tourney_id)
+
+	    if tourney is None:
+	    	abort(404)
+
+	    return jsonify({
+	        'success': True,
+	        'tourney': tourney.format()
 	    }), 200
 
 
