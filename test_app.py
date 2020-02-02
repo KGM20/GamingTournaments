@@ -72,6 +72,16 @@ class GamingTourneyTestCase(unittest.TestCase):
             "game_id": 2
         }
 
+        self.new_inscription = {
+            "player_id": 1,
+            "tourney_id": 3
+        }
+
+        self.repeated_inscription = {
+            "player_id": 1,
+            "tourney_id": 2
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -257,6 +267,22 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_update_tourney_with_wrong_format(self):
         res = self.client().patch('/tourneys/3', json=self.wrong_patch_format)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable entity')
+
+    def test_create_new_inscription(self):
+        res = self.client().post('/inscriptions', json=self.new_inscription)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_422_create_inscription_that_already_exists(self):
+        res = self.client().post('/inscriptions',
+                                 json=self.repeated_inscription)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
