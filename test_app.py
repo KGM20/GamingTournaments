@@ -119,6 +119,22 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Method not allowed')
 
+    def test_get_players_by_id(self):
+        res = self.client().get('/players/1')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['player'])
+
+    def test_404_requesting_player_that_does_not_exists(self):
+        res = self.client().get('/players/1234568790')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Not found')
+
     def test_create_new_player(self):
         res = self.client().post('/players', json=self.new_player)
         data = json.loads(res.data)
@@ -322,7 +338,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
     '''
 
-    def test_delete_inscription_with_wrong_method(self):
+    def test_405_delete_inscription_with_wrong_method(self):
         res = self.client().get('/inscriptions', json=self.bad_inscription)
         data = json.loads(res.data)
 
