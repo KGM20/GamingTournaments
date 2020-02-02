@@ -75,7 +75,7 @@ def create_app(test_config=None):
 
 
     @app.route('/players/<int:player_id>', methods=['PATCH'])
-    def update_drink(player_id):
+    def update_player(player_id):
 	    body = request.get_json()
 
 	    name = body.get('name', None)
@@ -215,6 +215,59 @@ def create_app(test_config=None):
         except:
         	db.session.rollback()
         	abort(422)
+
+
+    @app.route('/tourneys/<int:tourney_id>', methods=['PATCH'])
+    def update_tourney(tourney_id):
+	    body = request.get_json()
+
+	    name = body.get('name', None)
+	    location = body.get('location', None)
+	    game_id = body.get('game_id', None)
+	    winner = body.get('winner', None)
+
+	    if name is None or location is None or game_id is None:
+	    	abort(422)
+
+	    # This try-except is to validate date has a real date format
+	    try:
+	    	date = datetime.strptime(body.get('date', None), "%Y-%m-%d %H:%M")
+        			
+	    except:
+	    	abort(422)
+
+	    '''
+    	This is because you can't set a winner to a tourney that hasn't been
+    	held yet
+
+    	'''
+	    if winner is not None:
+    		today = datetime.now()
+
+    		if today < date:
+    			abort(422)
+
+	    tourney = db.session.query(Tourney).get(tourney_id)
+
+	    if tourney is None:
+	        abort(404)
+
+	    try:
+	        tourney.name = name
+	        tourney.location = location
+	        tourney.date = date
+	        tourney.winner = winner
+	        tourney.game_id = game_id
+
+	        tourney.update()
+
+	        return jsonify({
+	            'success': True
+	        }), 200
+
+	    except:
+	    	db.session.rollback()
+    		abort(422)
 
 
     @app.errorhandler(404)
