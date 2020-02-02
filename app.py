@@ -198,6 +198,25 @@ def create_app(test_config=None):
 	    	abort(422)
 
 
+    @app.route('/tourneys/<int:tourney_id>', methods=['DELETE'])
+    def delete_a_tourney(tourney_id):
+        tourney = db.session.query(Tourney).get(tourney_id)
+
+        if tourney is None:
+            abort(404)
+
+        try:
+            tourney.delete()
+
+            return jsonify({
+                'success': True,
+            })
+
+        except:
+        	db.session.rollback()
+        	abort(422)
+
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
