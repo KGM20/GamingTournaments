@@ -82,6 +82,16 @@ class GamingTourneyTestCase(unittest.TestCase):
             "tourney_id": 2
         }
 
+        self.bad_inscription = {
+            "player_id": 'Oh no...',
+            "tourney_id": False
+        }
+
+        self.bad_inscription = {
+            "player_id": 2,
+            "tourney_id": 4
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -227,6 +237,10 @@ class GamingTourneyTestCase(unittest.TestCase):
         res = self.client().patch('/tourneys')
         data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Method not allowed')
+
     def test_create_new_tourney(self):
         res = self.client().post('/tourneys', json=self.new_tourney)
         data = json.loads(res.data)
@@ -299,7 +313,22 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Unprocessable entity')
+
+    def test_delete_inscription(self):
+        res = self.client().delete('/inscriptions', json=self.bad_inscription)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
     '''
+
+    def test_delete_inscription_with_wrong_method(self):
+        res = self.client().get('/inscriptions', json=self.bad_inscription)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 405)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Method not allowed')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
