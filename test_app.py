@@ -257,6 +257,22 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Method not allowed')
 
+    def test_get_tourney_by_id(self):
+        res = self.client().get('/tourneys/1')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['tourney'])
+
+    def test_404_requesting_tourney_that_does_not_exists(self):
+        res = self.client().get('/tourneys/1234568790')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Not found')
+
     def test_create_new_tourney(self):
         res = self.client().post('/tourneys', json=self.new_tourney)
         data = json.loads(res.data)
