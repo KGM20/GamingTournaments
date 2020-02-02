@@ -270,6 +270,40 @@ def create_app(test_config=None):
     		abort(422)
 
 
+    @app.route('/inscriptions', methods=['POST'])
+    def submit_inscription():
+	    body = request.get_json()
+
+	    player_id = body.get('player_id', None)
+	    tourney_id = body.get('tourney_id', None)
+
+	    player = db.session.query(Player).get(player_id)
+	    tourney = db.session.query(Tourney).get(tourney_id)
+
+	    if player is None or tourney is None:
+	    	abort(404)
+
+	    player_tourneys = player.player_tourneys
+
+        # This is to not repeat an inscription
+	    if tourney in player_tourneys:
+        	abort(422)
+
+	    player_tourneys.append(tourney)
+	    player.player_tourneys = player_tourneys
+
+	    try:
+	        player.update()
+
+	        return jsonify({
+                'success': True,
+            })
+
+	    except:
+	    	db.session.rollback()
+	    	abort(422)
+
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
