@@ -127,7 +127,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['player'])
 
-    def test_404_requesting_player_that_does_not_exists(self):
+    def test_404_requesting_player_that_does_not_exist(self):
         res = self.client().get('/players/1234568790')
         data = json.loads(res.data)
 
@@ -277,7 +277,7 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertTrue(data['tourney'])
     '''
 
-    def test_404_requesting_tourney_that_does_not_exists(self):
+    def test_404_requesting_tourney_that_does_not_exist(self):
         res = self.client().get('/tourneys/1234568790')
         data = json.loads(res.data)
 
@@ -373,6 +373,23 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 405)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'Method not allowed')
+
+    def test_get_players_by_id(self):
+        res = self.client().get('/tourneys/1/players')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['tourney'])
+        self.assertTrue(data['players'])
+
+    def test_404_requesting_players_from_tourney_that_does_not_exist(self):
+        res = self.client().get('/tourneys/1/players')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Not found')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
