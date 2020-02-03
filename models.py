@@ -130,13 +130,17 @@ class Tourney(db.Model):
         db.session.commit()
 
     def format(self):
-    	game = db.session.query(Game).get(self.game_id)
+    	game = db.session.query(Game).get(self.game_id).title
+    	winner = db.session.query(Player).get(self.winner)
+
+    	if winner is not None:
+    		winner = winner.nickname
 
     	return {
             'id': self.id,
             'name': self.name,
             'location': self.location,
             'date': self.date.strftime("%Y-%m-%d %H:%M:%S"),
-        	'winner': self.winner,
-        	'game': game.title
+        	'winner': winner,
+        	'game': game
         }
