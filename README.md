@@ -80,3 +80,7 @@ https://gaming-tournaments.herokuapp.com
 ## API Reference
 
 You can find the API reference [here](API.md).
+
+## Author
+
+- Kevin "KGM20" Cruz
