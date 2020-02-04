@@ -51,6 +51,9 @@ def create_app(test_config=None):
     def create_player(jwt):
 	    body = request.get_json()
 
+	    if not body:
+	        abort(400)
+
 	    name = body.get('name', None)
 	    nickname = body.get('nickname', None)
 	    nationality = body.get('nationality', None)
@@ -93,6 +96,9 @@ def create_app(test_config=None):
     @requires_auth('patch:players')
     def update_player(jwt, player_id):
 	    body = request.get_json()
+
+	    if not body:
+	        abort(400)
 
 	    name = body.get('name', None)
 	    nickname = body.get('nickname', None)
@@ -138,6 +144,9 @@ def create_app(test_config=None):
     @requires_auth('post:games')
     def create_game(jwt):
 	    body = request.get_json()
+
+	    if not body:
+	        abort(400)
 
 	    title = body.get('title', None)
 
@@ -221,6 +230,9 @@ def create_app(test_config=None):
     def create_tourney(jwt):
 	    body = request.get_json()
 
+	    if not body:
+	        abort(400)
+
 	    name = body.get('name', None)
 	    location = body.get('location', None)
 	    game_id = body.get('game_id', None)
@@ -270,6 +282,9 @@ def create_app(test_config=None):
     @requires_auth('patch:tourneys')
     def update_tourney(jwt, tourney_id):
 	    body = request.get_json()
+
+	    if not body:
+	        abort(400)
 
 	    name = body.get('name', None)
 	    location = body.get('location', None)
@@ -325,6 +340,9 @@ def create_app(test_config=None):
     def submit_inscription(jwt):
 	    body = request.get_json()
 
+	    if not body:
+	        abort(400)
+
 	    player_id = body.get('player_id', None)
 	    tourney_id = body.get('tourney_id', None)
 
@@ -369,6 +387,9 @@ def create_app(test_config=None):
     def delete_an_inscription(jwt):
 	    body = request.get_json()
 
+	    if not body:
+	        abort(400)
+
 	    player_id = body.get('player_id', None)
 	    tourney_id = body.get('tourney_id', None)
 
@@ -397,6 +418,14 @@ def create_app(test_config=None):
         	db.session.rollback()
         	abort(422)
 
+
+    @app.errorhandler(400)
+    def not_found(error):
+        return jsonify({
+            'success': False,
+            'error': 400,
+            'message': 'Bad request'
+        }), 400
 
     @app.errorhandler(404)
     def not_found(error):
