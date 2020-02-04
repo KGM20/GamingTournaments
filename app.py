@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 from models import setup_db, db, Player, Game, Tourney
+from auth.auth import AuthError, requires_auth
 
 def create_app(test_config=None):
 
@@ -46,7 +47,8 @@ def create_app(test_config=None):
 
 
     @app.route('/players', methods=['POST'])
-    def create_player():
+    @requires_auth('post:players')
+    def create_player(jwt):
 	    body = request.get_json()
 
 	    name = body.get('name', None)
@@ -68,7 +70,8 @@ def create_app(test_config=None):
 
 
     @app.route('/players/<int:player_id>', methods=['DELETE'])
-    def delete_a_player(player_id):
+    @requires_auth('delete:players')
+    def delete_a_player(jwt, player_id):
         player = db.session.query(Player).get(player_id)
 
         if player is None:
@@ -87,7 +90,8 @@ def create_app(test_config=None):
 
 
     @app.route('/players/<int:player_id>', methods=['PATCH'])
-    def update_player(player_id):
+    @requires_auth('patch:players')
+    def update_player(jwt, player_id):
 	    body = request.get_json()
 
 	    name = body.get('name', None)
@@ -131,7 +135,8 @@ def create_app(test_config=None):
 
 
     @app.route('/games', methods=['POST'])
-    def create_game():
+    @requires_auth('post:games')
+    def create_game(jwt):
 	    body = request.get_json()
 
 	    title = body.get('title', None)
@@ -151,7 +156,8 @@ def create_app(test_config=None):
 
 
     @app.route('/games/<int:game_id>', methods=['DELETE'])
-    def delete_a_game(game_id):
+    @requires_auth('delete:games')
+    def delete_a_game(jwt, game_id):
         game = db.session.query(Game).get(game_id)
 
         if game is None:
@@ -211,7 +217,8 @@ def create_app(test_config=None):
 
 
     @app.route('/tourneys', methods=['POST'])
-    def create_tourney():
+    @requires_auth('post:tourneys')
+    def create_tourney(jwt):
 	    body = request.get_json()
 
 	    name = body.get('name', None)
@@ -240,7 +247,8 @@ def create_app(test_config=None):
 
 
     @app.route('/tourneys/<int:tourney_id>', methods=['DELETE'])
-    def delete_a_tourney(tourney_id):
+    @requires_auth('delete:tourneys')
+    def delete_a_tourney(jwt, tourney_id):
         tourney = db.session.query(Tourney).get(tourney_id)
 
         if tourney is None:
@@ -259,7 +267,8 @@ def create_app(test_config=None):
 
 
     @app.route('/tourneys/<int:tourney_id>', methods=['PATCH'])
-    def update_tourney(tourney_id):
+    @requires_auth('patch:tourneys')
+    def update_tourney(jwt, tourney_id):
 	    body = request.get_json()
 
 	    name = body.get('name', None)
@@ -312,7 +321,8 @@ def create_app(test_config=None):
 
 
     @app.route('/inscriptions', methods=['POST'])
-    def submit_inscription():
+    @requires_auth('post:inscriptions')
+    def submit_inscription(jwt):
 	    body = request.get_json()
 
 	    player_id = body.get('player_id', None)
@@ -355,7 +365,8 @@ def create_app(test_config=None):
 
 
     @app.route('/inscriptions', methods=['DELETE'])
-    def delete_an_inscription():
+    @requires_auth('delete:inscriptions')
+    def delete_an_inscription(jwt):
 	    body = request.get_json()
 
 	    player_id = body.get('player_id', None)
@@ -421,6 +432,12 @@ def create_app(test_config=None):
             'error': 500,
             'message': 'Internal server error'
         }), 500
+
+    @app.errorhandler(AuthError)
+    def handle_auth_error(ex):
+	    response = jsonify(ex.error)
+	    response.status_code = ex.status_code
+	    return response
 
     return app
 

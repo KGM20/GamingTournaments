@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "00d99379-bf70-494e-aeb0-03e745004ef0",
+		"name": "gaming-tourneys-api-requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "public (no token)",
+			"item": [
+				{
+					"name": "Use this to try a request without token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/plain",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://gaming-tournaments.herokuapp.com/tourneys",
+							"protocol": "https",
+							"host": [
+								"gaming-tournaments",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"tourneys"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "player's manager",
+			"item": [
+				{
+					"name": "Use this to try a request with manager token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMwUWpJelFUTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20yMC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRlZWQ1MjRmNzg3ODcwY2M4YjZiODNiIiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MjgxMiwiZXhwIjoxNTgwODQ5MjEyLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXNLN0owcSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmluc2NyaXB0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG9zdDppbnNjcmlwdGlvbnMiLCJwb3N0OnBsYXllcnMiXX0.MadEGTbFmh1gNkLL3vAlLnBOqRo_O4S3lvkQjUhr4MMVovkJutHjeKz8oDOShqD6H8obXOiNwdjvoWUQnh_lnmyft2VkQ1TMSZanp6iZ9kAmK9HV_sw7gHcHtmVHD1dvwNSEqoRsAtkaimuKGAGvbkX82dwRztZLLryLIgIcn-EiMy5NBroYeSjfQ_4NrVmeAHwXQiIJrnsb7VAwbcFOwFusoIHLtSU8_ZxKE_XZ1gA_LtLa3GG18emfjxuyu6GDzN3JpXqM_zeCHiuRX5NV_YdqKNp2JzJwScLK21pAQnkRtDpkyE3l3tCUMBwX8wEazQY3SguN_VskuTx0joxxdA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://gaming-tournaments.herokuapp.com/players",
+							"protocol": "https",
+							"host": [
+								"gaming-tournaments",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"players"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This role has the public permissions + every /players and /inscriptions endpoints + /tourneys/id PATCH endpoint.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMwUWpJelFUTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20yMC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRlZWQ1MjRmNzg3ODcwY2M4YjZiODNiIiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MjgxMiwiZXhwIjoxNTgwODQ5MjEyLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXNLN0owcSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmluc2NyaXB0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG9zdDppbnNjcmlwdGlvbnMiLCJwb3N0OnBsYXllcnMiXX0.MadEGTbFmh1gNkLL3vAlLnBOqRo_O4S3lvkQjUhr4MMVovkJutHjeKz8oDOShqD6H8obXOiNwdjvoWUQnh_lnmyft2VkQ1TMSZanp6iZ9kAmK9HV_sw7gHcHtmVHD1dvwNSEqoRsAtkaimuKGAGvbkX82dwRztZLLryLIgIcn-EiMy5NBroYeSjfQ_4NrVmeAHwXQiIJrnsb7VAwbcFOwFusoIHLtSU8_ZxKE_XZ1gA_LtLa3GG18emfjxuyu6GDzN3JpXqM_zeCHiuRX5NV_YdqKNp2JzJwScLK21pAQnkRtDpkyE3l3tCUMBwX8wEazQY3SguN_VskuTx0joxxdA",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "tourney's administrator",
+			"item": [
+				{
+					"name": "Use this to try a request with administrator token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMwUWpJelFUTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20yMC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRmYzE4OWQ5NGQ3YTUxNTM2NWY3MGMyIiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MzMwMCwiZXhwIjoxNTgwODQ5NzAwLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXNLN0owcSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmdhbWVzIiwiZGVsZXRlOmluc2NyaXB0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwiZGVsZXRlOnRvdXJuZXlzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG9zdDpnYW1lcyIsInBvc3Q6aW5zY3JpcHRpb25zIiwicG9zdDpwbGF5ZXJzIiwicG9zdDp0b3VybmV5cyJdfQ.a-RBIBAvTdAUNWgBkyAeAl_j2pYK_an1QudV5Hx_nixxqq0TA_z66JfZZOddoQpq8dAb4z-C2YhTa6J4haJ412ACjPTqqJbZGDWoXgGol9Bkx4boQZeL5PUQ3G6zMe8pjhX1znlyzrJFl6784loywQkgFsZ3PPsIKJF5yvJ4mApyQIFR2MgZfT3MHFSVsx8Z_zRBOMvGO6TbahIhwo0Zo9G-tPfPGSQkj8B0pwPFfxfwZy6XSVB_Ik41Xg43wzXKTuUQ92Gwa7Dbyz-Zq5QMUsXDVotUqH6W0pao4aNet2jFx09PEMLa3rUFLwRlfNyWDK-VWJfG2CufbM_zspF32w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"player_id\": 4,\n\t\"tourney_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gaming-tournaments.herokuapp.com/inscriptions",
+							"protocol": "https",
+							"host": [
+								"gaming-tournaments",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"inscriptions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This role has access to everything",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMwUWpJelFUTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20yMC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRmYzE4OWQ5NGQ3YTUxNTM2NWY3MGMyIiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MzMwMCwiZXhwIjoxNTgwODQ5NzAwLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXNLN0owcSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmdhbWVzIiwiZGVsZXRlOmluc2NyaXB0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwiZGVsZXRlOnRvdXJuZXlzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG9zdDpnYW1lcyIsInBvc3Q6aW5zY3JpcHRpb25zIiwicG9zdDpwbGF5ZXJzIiwicG9zdDp0b3VybmV5cyJdfQ.a-RBIBAvTdAUNWgBkyAeAl_j2pYK_an1QudV5Hx_nixxqq0TA_z66JfZZOddoQpq8dAb4z-C2YhTa6J4haJ412ACjPTqqJbZGDWoXgGol9Bkx4boQZeL5PUQ3G6zMe8pjhX1znlyzrJFl6784loywQkgFsZ3PPsIKJF5yvJ4mApyQIFR2MgZfT3MHFSVsx8Z_zRBOMvGO6TbahIhwo0Zo9G-tPfPGSQkj8B0pwPFfxfwZy6XSVB_Ik41Xg43wzXKTuUQ92Gwa7Dbyz-Zq5QMUsXDVotUqH6W0pao4aNet2jFx09PEMLa3rUFLwRlfNyWDK-VWJfG2CufbM_zspF32w",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
