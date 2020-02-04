@@ -1,4 +1,3 @@
-
 from sqlalchemy import Column, String, Integer, DateTime, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -12,6 +11,8 @@ db = SQLAlchemy()
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
+
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -19,11 +20,12 @@ def setup_db(app, database_path=database_path):
     db.init_app(app)
     db.create_all()
 
-
 '''
 Player
 A person interested to play games tournaments
 '''
+
+
 class Player(db.Model):
     __tablename__ = 'players'
 
@@ -56,11 +58,12 @@ class Player(db.Model):
             'nationality': self.nationality
         }
 
-
 '''
 Game
 A game :)
 '''
+
+
 class Game(db.Model):
     __tablename__ = 'games'
 
@@ -91,14 +94,22 @@ class Game(db.Model):
 A many to many relationship between players and tourneys
 '''
 players_tourneys = db.Table('players_tourneys',
-    Column('player_id', Integer, db.ForeignKey('players.id'), primary_key=True),
-    Column('tourney_id', Integer, db.ForeignKey('tourneys.id'), primary_key=True)
-)
+                            Column('player_id',
+                                   Integer,
+                                   db.ForeignKey('players.id'),
+                                   primary_key=True),
+                            Column('tourney_id',
+                                   Integer,
+                                   db.ForeignKey('tourneys.id'),
+                                   primary_key=True)
+                            )
 
 '''
 Tourney
 An events where players gather to play against each other to see who's the best
 '''
+
+
 class Tourney(db.Model):
     __tablename__ = 'tourneys'
 
@@ -109,7 +120,8 @@ class Tourney(db.Model):
     winner = Column(Integer, db.ForeignKey('players.id'))
     game_id = Column(Integer, db.ForeignKey('games.id'), nullable=False)
     players = db.relationship('Player', secondary=players_tourneys,
-		backref=db.backref('player_tourneys', lazy=True))
+                              backref=db.backref('player_tourneys',
+                                                 lazy=True))
 
     def __init__(self, name, location, date, game_id):
         self.name = name
@@ -130,17 +142,17 @@ class Tourney(db.Model):
         db.session.commit()
 
     def format(self):
-    	game = db.session.query(Game).get(self.game_id).title
-    	winner = db.session.query(Player).get(self.winner)
+        game = db.session.query(Game).get(self.game_id).title
+        winner = db.session.query(Player).get(self.winner)
 
-    	if winner is not None:
-    		winner = winner.nickname
+        if winner is not None:
+            winner = winner.nickname
 
-    	return {
+        return {
             'id': self.id,
             'name': self.name,
             'location': self.location,
             'date': self.date.strftime("%Y-%m-%d %H:%M:%S"),
-        	'winner': winner,
-        	'game': game
+            'winner': winner,
+            'game': game
         }

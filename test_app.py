@@ -16,8 +16,10 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.client = self.app.test_client
         self.database_name = "test.db"
         self.project_dir = os.path.dirname(os.path.abspath(__file__))
-        self.database_path = "sqlite:///{}".format(os.path.join(self.project_dir,
-                                                  				self.database_name))
+        self.database_path = "sqlite:///{}".format(os.
+                                                   path.
+                                                   join(self.project_dir,
+                                                        self.database_name))
         setup_db(self.app, self.database_path)
 
         self.new_player = {
@@ -93,41 +95,67 @@ class GamingTourneyTestCase(unittest.TestCase):
         }
 
         self.players_manager_token = ('Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6Ikp'
-            'XVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMwUWpJelF'
-            'UTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20yMC5hdX'
-            'RoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRlZWQ1MjRmNzg3ODcwY2M4YjZiODNiIi'
-            'wiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MjgxMiwiZXhwIjoxNT'
-            'gwODQ5MjEyLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXNLN0owcS'
-            'IsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmluc2NyaXB0aW9ucy'
-            'IsImRlbGV0ZTpwbGF5ZXJzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZX'
-            'lzIiwicG9zdDppbnNjcmlwdGlvbnMiLCJwb3N0OnBsYXllcnMiXX0.MadEGTbFmh'
-            '1gNkLL3vAlLnBOqRo_O4S3lvkQjUhr4MMVovkJutHjeKz8oDOShqD6H8obXOiNwd'
-            'jvoWUQnh_lnmyft2VkQ1TMSZanp6iZ9kAmK9HV_sw7gHcHtmVHD1dvwNSEqoRsAt'
-            'kaimuKGAGvbkX82dwRztZLLryLIgIcn-EiMy5NBroYeSjfQ_4NrVmeAHwXQiIJrn'
-            'sb7VAwbcFOwFusoIHLtSU8_ZxKE_XZ1gA_LtLa3GG18emfjxuyu6GDzN3JpXqM_z'
-            'eCHiuRX5NV_YdqKNp2JzJwScLK21pAQnkRtDpkyE3l3tCUMBwX8wEazQY3SguN_V'
-            'skuTx0joxxdA')
+                                      'XVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOM'
+                                      'El4UXpnd01ERTVNamMwUWpJelFUTTNNRE13UTB'
+                                      'GRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rl'
+                                      'di1rZ20yMC5hdXRoMC5jb20vIiwic3ViIjoiYX'
+                                      'V0aDB8NWRlZWQ1MjRmNzg3ODcwY2M4YjZiODNi'
+                                      'IiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdC'
+                                      'I6MTU4MDc2MjgxMiwiZXhwIjoxNTgwODQ5MjEy'
+                                      'LCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cW'
+                                      'VwaXZmUXNLN0owcSIsInNjb3BlIjoiIiwicGVy'
+                                      'bWlzc2lvbnMiOlsiZGVsZXRlOmluc2NyaXB0aW'
+                                      '9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwicGF0Y2g6'
+                                      'cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG'
+                                      '9zdDppbnNjcmlwdGlvbnMiLCJwb3N0OnBsYXll'
+                                      'cnMiXX0.MadEGTbFmh1gNkLL3vAlLnBOqRo_O4'
+                                      'S3lvkQjUhr4MMVovkJutHjeKz8oDOShqD6H8ob'
+                                      'XOiNwdjvoWUQnh_lnmyft2VkQ1TMSZanp6iZ9k'
+                                      'AmK9HV_sw7gHcHtmVHD1dvwNSEqoRsAtkaimuK'
+                                      'GAGvbkX82dwRztZLLryLIgIcn-EiMy5NBroYeS'
+                                      'jfQ_4NrVmeAHwXQiIJrnsb7VAwbcFOwFusoIHL'
+                                      'tSU8_ZxKE_XZ1gA_LtLa3GG18emfjxuyu6GDzN'
+                                      '3JpXqM_zeCHiuRX5NV_YdqKNp2JzJwScLK21pA'
+                                      'QnkRtDpkyE3l3tCUMBwX8wEazQY3SguN_VskuT'
+                                      'x0joxxdA')
 
         self.tourneys_administrator_token = ('Bearer eyJhbGciOiJSUzI1NiIsInR5'
-            'cCI6IkpXVCIsImtpZCI6IlF6QTVSREJEUVRJeE5rTXhOMEl4UXpnd01ERTVNamMw'
-            'UWpJelFUTTNNRE13UTBGRlFUSXlOQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1rZ20'
-            'yMC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWRmYzE4OWQ5NGQ3YTUxNTM2NWY'
-            '3MGMyIiwiYXVkIjoiZ2FtaW5ndG91cm5leSIsImlhdCI6MTU4MDc2MzMwMCwiZXh'
-            'wIjoxNTgwODQ5NzAwLCJhenAiOiJLT2YxMk45MU5OcGgwQ1htSko2cWVwaXZmUXN'
-            'LN0owcSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmdhbWVzIiw'
-            'iZGVsZXRlOmluc2NyaXB0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzIiwiZGVsZXRlOnR'
-            'vdXJuZXlzIiwicGF0Y2g6cGxheWVycyIsInBhdGNoOnRvdXJuZXlzIiwicG9zdDp'
-            'nYW1lcyIsInBvc3Q6aW5zY3JpcHRpb25zIiwicG9zdDpwbGF5ZXJzIiwicG9zdDp'
-            '0b3VybmV5cyJdfQ.a-RBIBAvTdAUNWgBkyAeAl_j2pYK_an1QudV5Hx_nixxqq0T'
-            'A_z66JfZZOddoQpq8dAb4z-C2YhTa6J4haJ412ACjPTqqJbZGDWoXgGol9Bkx4bo'
-            'QZeL5PUQ3G6zMe8pjhX1znlyzrJFl6784loywQkgFsZ3PPsIKJF5yvJ4mApyQIFR'
-            '2MgZfT3MHFSVsx8Z_zRBOMvGO6TbahIhwo0Zo9G-tPfPGSQkj8B0pwPFfxfwZy6X'
-            'SVB_Ik41Xg43wzXKTuUQ92Gwa7Dbyz-Zq5QMUsXDVotUqH6W0pao4aNet2jFx09P'
-            'EMLa3rUFLwRlfNyWDK-VWJfG2CufbM_zspF32w')
+                                             'cCI6IkpXVCIsImtpZCI6IlF6QTVSREJ'
+                                             'EUVRJeE5rTXhOMEl4UXpnd01ERTVNam'
+                                             'MwUWpJelFUTTNNRE13UTBGRlFUSXlOQ'
+                                             'SJ9.eyJpc3MiOiJodHRwczovL2Rldi1'
+                                             'rZ20yMC5hdXRoMC5jb20vIiwic3ViIj'
+                                             'oiYXV0aDB8NWRmYzE4OWQ5NGQ3YTUxN'
+                                             'TM2NWY3MGMyIiwiYXVkIjoiZ2FtaW5n'
+                                             'dG91cm5leSIsImlhdCI6MTU4MDc2MzM'
+                                             'wMCwiZXhwIjoxNTgwODQ5NzAwLCJhen'
+                                             'AiOiJLT2YxMk45MU5OcGgwQ1htSko2c'
+                                             'WVwaXZmUXNLN0owcSIsInNjb3BlIjoi'
+                                             'IiwicGVybWlzc2lvbnMiOlsiZGVsZXR'
+                                             'lOmdhbWVzIiwiZGVsZXRlOmluc2NyaX'
+                                             'B0aW9ucyIsImRlbGV0ZTpwbGF5ZXJzI'
+                                             'iwiZGVsZXRlOnRvdXJuZXlzIiwicGF0'
+                                             'Y2g6cGxheWVycyIsInBhdGNoOnRvdXJ'
+                                             'uZXlzIiwicG9zdDpnYW1lcyIsInBvc3'
+                                             'Q6aW5zY3JpcHRpb25zIiwicG9zdDpwb'
+                                             'GF5ZXJzIiwicG9zdDp0b3VybmV5cyJd'
+                                             'fQ.a-RBIBAvTdAUNWgBkyAeAl_j2pYK'
+                                             '_an1QudV5Hx_nixxqq0TA_z66JfZZOd'
+                                             'doQpq8dAb4z-C2YhTa6J4haJ412ACjP'
+                                             'TqqJbZGDWoXgGol9Bkx4boQZeL5PUQ3'
+                                             'G6zMe8pjhX1znlyzrJFl6784loywQkg'
+                                             'FsZ3PPsIKJF5yvJ4mApyQIFR2MgZfT3'
+                                             'MHFSVsx8Z_zRBOMvGO6TbahIhwo0Zo9'
+                                             'G-tPfPGSQkj8B0pwPFfxfwZy6XSVB_I'
+                                             'k41Xg43wzXKTuUQ92Gwa7Dbyz-Zq5QM'
+                                             'UsXDVotUqH6W0pao4aNet2jFx09PEML'
+                                             'a3rUFLwRlfNyWDK-VWJfG2CufbM_zsp'
+                                             'F32w')
 
         self.manager_headers = {'Authorization': self.players_manager_token}
 
-        self.administrator_headers = {'Authorization': self.tourneys_administrator_token}
+        self.administrator_headers = {'Authorization':
+                                      self.tourneys_administrator_token}
 
         # binds the app to the current context
         with self.app.app_context():
@@ -173,7 +201,8 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Not found')
 
     def test_create_new_player(self):
-        res = self.client().post('/players', json=self.new_player, headers=self.manager_headers)
+        res = self.client().post('/players', json=self.new_player,
+                                 headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -181,7 +210,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_create_player_with_wrong_datatype(self):
         res = self.client().post('/players',
-                                 json=self.wrong_format_player, headers=self.manager_headers)
+                                 json=self.wrong_format_player,
+                                 headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -189,14 +219,16 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Unprocessable entity')
 
     def test_delete_player(self):
-        res = self.client().delete('/players/6', headers=self.administrator_headers)
+        res = self.client().delete('/players/6',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_404_delete_a_non_existing_player(self):
-        res = self.client().delete('/players/1234567890', headers=self.administrator_headers)
+        res = self.client().delete('/players/1234567890',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -204,7 +236,8 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Not found')
 
     def test_update_player(self):
-        res = self.client().patch('/players/5', json=self.patch_player, headers=self.manager_headers)
+        res = self.client().patch('/players/5', json=self.patch_player,
+                                  headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -212,7 +245,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_update_player_with_wrong_format(self):
         res = self.client().patch('/players/5',
-                                 json=self.wrong_patch_format, headers=self.manager_headers)
+                                  json=self.wrong_patch_format,
+                                  headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -236,7 +270,8 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Method not allowed')
 
     def test_create_new_game(self):
-        res = self.client().post('/games', json=self.new_game, headers=self.administrator_headers)
+        res = self.client().post('/games', json=self.new_game,
+                                 headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -244,7 +279,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_create_game_with_wrong_format(self):
         res = self.client().post('/games',
-                                 json=self.wrong_format_game, headers=self.administrator_headers)
+                                 json=self.wrong_format_game,
+                                 headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -252,14 +288,16 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Unprocessable entity')
 
     def test_delete_game(self):
-        res = self.client().delete('/games/5', headers=self.administrator_headers)
+        res = self.client().delete('/games/5',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_404_delete_a_non_existing_game(self):
-        res = self.client().delete('/games/1234567890', headers=self.administrator_headers)
+        res = self.client().delete('/games/1234567890',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -323,7 +361,8 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Not found')
 
     def test_create_new_tourney(self):
-        res = self.client().post('/tourneys', json=self.new_tourney, headers=self.administrator_headers)
+        res = self.client().post('/tourneys', json=self.new_tourney,
+                                 headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -331,7 +370,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
     def test_422_create_tourney_with_wrong_datatype(self):
         res = self.client().post('/tourneys',
-                                 json=self.wrong_datatypes_tourney, headers=self.administrator_headers)
+                                 json=self.wrong_datatypes_tourney,
+                                 headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -339,14 +379,16 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Unprocessable entity')
 
     def test_delete_tourney(self):
-        res = self.client().delete('/tourneys/4', headers=self.administrator_headers)
+        res = self.client().delete('/tourneys/4',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_404_delete_a_non_existing_tourney(self):
-        res = self.client().delete('/tourneys/1234567890', headers=self.administrator_headers)
+        res = self.client().delete('/tourneys/1234567890',
+                                   headers=self.administrator_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -354,14 +396,16 @@ class GamingTourneyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Not found')
 
     def test_update_tourney(self):
-        res = self.client().patch('/tourneys/3', json=self.patch_tourney, headers=self.manager_headers)
+        res = self.client().patch('/tourneys/3', json=self.patch_tourney,
+                                  headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_422_update_tourney_with_wrong_format(self):
-        res = self.client().patch('/tourneys/3', json=self.wrong_patch_format, headers=self.manager_headers)
+        res = self.client().patch('/tourneys/3', json=self.wrong_patch_format,
+                                  headers=self.manager_headers)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -462,7 +506,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 403)
         self.assertEqual(data['success'], False)
-        self.assertEqual(data['message'], 'Token has not the required persmission.')
+        self.assertEqual(data['message'],
+                         'Token has not the required persmission.')
 
     def test_403_delete_game_without_permission(self):
         res = self.client().delete('/games/1', headers=self.manager_headers)
@@ -470,7 +515,8 @@ class GamingTourneyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 403)
         self.assertEqual(data['success'], False)
-        self.assertEqual(data['message'], 'Token has not the required persmission.')
+        self.assertEqual(data['message'],
+                         'Token has not the required persmission.')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
